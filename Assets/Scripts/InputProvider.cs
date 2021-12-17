@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Controls
 {
-    public class PlayerController : MonoBehaviour
+    public class InputProvider : MonoBehaviour
     {
         Vector2 dragDirection;
-        CharacterController characterController;
-        [SerializeField] float movingSpeed = 10f;
         [SerializeField] float dragSpeed = 10f;
 
-        float xSpeed;
+        public float XSpeed { get; private set; }
 
         public bool isPushed;
         public void OnMove(InputAction.CallbackContext context)
@@ -25,21 +23,14 @@ namespace Player
             isPushed = context.ReadValueAsButton();
         }
 
-        private void Awake()
-        {
-            characterController = GetComponent<CharacterController>();
-        }
-
         private void Update()
         {
-
             if (isPushed)
-                xSpeed = dragDirection.x * dragSpeed;
+                XSpeed = dragDirection.x * dragSpeed;
             else
-                xSpeed = 0;
+                XSpeed = 0;
 
-            Vector3 movingVector = new Vector3(xSpeed, 0, movingSpeed) * Time.deltaTime;
-            characterController.Move(movingVector);
+            print(XSpeed);
         }
     }
 }
