@@ -8,7 +8,7 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         Vector2 dragDirection;
-        Rigidbody rb;
+        CharacterController characterController;
         [SerializeField] float movingSpeed = 10f;
         [SerializeField] float dragSpeed = 10f;
 
@@ -27,17 +27,19 @@ namespace Player
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            characterController = GetComponent<CharacterController>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            rb.velocity = new Vector3(xSpeed, 0, movingSpeed);
 
             if (isPushed)
                 xSpeed = dragDirection.x * dragSpeed;
             else
                 xSpeed = 0;
+
+            Vector3 movingVector = new Vector3(xSpeed, 0, movingSpeed) * Time.deltaTime;
+            characterController.Move(movingVector);
         }
     }
 }
