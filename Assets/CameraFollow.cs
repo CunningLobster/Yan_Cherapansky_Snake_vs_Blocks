@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+namespace Core
 {
-    [SerializeField] Transform target;
-    Vector3 offset;
-
-    private void Awake()
+    public class CameraFollow : MonoBehaviour
     {
-        offset = target.position - transform.position;
-    }
+        [SerializeField] Transform target;
+        Vector3 offset;
 
-    void Update()
-    {
-        transform.position = target.position - offset;
+        private void Awake()
+        {
+            offset = target.position - transform.position;
+        }
+
+        void Update()
+        {
+            transform.position = target.position - offset;
+        }
     }
 }
