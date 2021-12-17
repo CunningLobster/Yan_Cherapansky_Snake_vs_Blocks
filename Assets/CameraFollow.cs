@@ -16,7 +16,7 @@ namespace Core
 
         void Update()
         {
-            transform.position = target.position - offset;
+            transform.position = new Vector3(transform.position.x, transform.position.y, target.position.z - offset.z);
         }
     }
 }
