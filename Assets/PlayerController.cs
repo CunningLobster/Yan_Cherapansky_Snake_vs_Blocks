@@ -32,12 +32,14 @@ namespace Player
 
         private void FixedUpdate()
         {
-            rb.velocity = new Vector3(xSpeed, 0, movingSpeed);
 
             if (isPushed)
                 xSpeed = dragDirection.x * dragSpeed;
             else
                 xSpeed = 0;
+
+            rb.velocity = new Vector3(xSpeed, 0, movingSpeed);
+
         }
     }
 }
