@@ -12,6 +12,7 @@ namespace Assets.Scripts
         Vector3 movingVector;
 
         [SerializeField] Transform node;
+        [SerializeField] CharacterController head;
 
         public bool isHead;
 
@@ -22,9 +23,26 @@ namespace Assets.Scripts
 
         private void Update()
         {
-                movingVector = new Vector3(FindObjectOfType<InputProvider>().XSpeed, 0, movingSpeed) * Time.deltaTime;
-                characterController.Move(movingVector);
+
+            movingVector = new Vector3(0, 0, movingSpeed) * Time.deltaTime;
+            if (isHead)
+            {
+                movingVector.x = FindObjectOfType<InputProvider>().XSpeed * Time.deltaTime;
+            }
+            else
+            {
+                Debug.Log(OnNode());
+
+                if (!OnNode())
+                    movingVector.x = (head.transform.position - transform.position).normalized.x * head.velocity.magnitude;
+            }
+            characterController.Move(movingVector);
+
         }
 
+        bool OnNode()
+        {
+            return transform.position.x == node.position.x;
+        }
     }
 }
