@@ -248,6 +248,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingSpeed: 10
+  movingVector: {x: 0, y: 0, z: 0}
   node: {fileID: 0}
   head: {fileID: 0}
   isHead: 1
+  k: 0.5
+  minK: 0
+  maxK: 0.5
+  toNodeDistance: 1
