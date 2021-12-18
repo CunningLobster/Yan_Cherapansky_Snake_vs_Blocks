@@ -34,7 +34,7 @@ namespace Assets.Scripts
                 Debug.Log(OnNode());
 
                 if (!OnNode())
-                    movingVector.x = (head.transform.position - transform.position).normalized.x * head.velocity.magnitude;
+                    movingVector.x = head.transform.position.x - transform.position.x;
             }
             characterController.Move(movingVector);
 
