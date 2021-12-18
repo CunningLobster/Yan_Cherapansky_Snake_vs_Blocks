@@ -9,10 +9,10 @@ namespace Assets.Scripts
         CharacterController characterController;
         [SerializeField] float movingSpeed = 10f;
 
-        Vector3 movingVector;
+        public Vector3 movingVector;
 
         [SerializeField] Transform node;
-        [SerializeField] CharacterController head;
+        [SerializeField] Segment head;
 
         public bool isHead;
 
@@ -31,10 +31,7 @@ namespace Assets.Scripts
             }
             else
             {
-                Debug.Log(OnNode());
-
-                if (!OnNode())
-                    movingVector.x = head.transform.position.x - transform.position.x;
+                movingVector.x = Mathf.Lerp(0, head.movingVector.x, .9f);
             }
             characterController.Move(movingVector);
 
