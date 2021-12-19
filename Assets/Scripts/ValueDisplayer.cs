@@ -15,7 +15,6 @@ public class ValueDisplayer : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = Camera.main.transform.rotation;
         valueText.text = value.ToString();
     }
 

@@ -16,7 +16,7 @@ public class Snake : MonoBehaviour
 
     private void Awake()
     {
-        valueDisplayer.SetValue(tails.Count + 1);
+        valueDisplayer.SetValue(tails.Count);
         characterController = GetComponent<CharacterController>();
     }
 
@@ -43,7 +43,7 @@ public class Snake : MonoBehaviour
             if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
             {
                 Vector3 currentBonePosition = bone.position;
-                bone.GetComponent<CharacterController>().Move((previousPosition - currentBonePosition) * moveSpeed * 2f * Time.deltaTime);
+                bone.GetComponent<CharacterController>().Move((previousPosition - currentBonePosition) * moveSpeed * Time.deltaTime);
                 previousPosition = currentBonePosition;
             }
             else
@@ -55,13 +55,13 @@ public class Snake : MonoBehaviour
     {
         GameObject bone = Instantiate(bonePrefab, tails[tails.Count - 1].transform.position, Quaternion.identity);
         tails.Add(bone.transform);
-        valueDisplayer.SetValue(tails.Count + 1);
+        valueDisplayer.SetValue(tails.Count);
     }
 
     public void RemoveBone()
     {
         Destroy(tails[0].gameObject);
         tails.RemoveAt(0);
-        valueDisplayer.SetValue(tails.Count + 1);
+        valueDisplayer.SetValue(tails.Count);
     }
 }

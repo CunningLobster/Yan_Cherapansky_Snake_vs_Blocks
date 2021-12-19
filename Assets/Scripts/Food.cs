@@ -11,7 +11,7 @@ public class Food : MonoBehaviour
         valueDisplayer.SetValue(Random.Range(1, 10));
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (!other.TryGetComponent<Snake>(out Snake snake)) return;
         print("Triggered");
