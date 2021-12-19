@@ -29,8 +29,6 @@ namespace Controls
                 XSpeed = dragDirection.x * dragSpeed;
             else
                 XSpeed = 0;
-
-            print(XSpeed);
         }
     }
 }
