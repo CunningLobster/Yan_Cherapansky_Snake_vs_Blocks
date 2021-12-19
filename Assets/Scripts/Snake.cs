@@ -12,10 +12,11 @@ public class Snake : MonoBehaviour
     CharacterController characterController;
     Vector3 movingVector;
 
-    [Range(0, 1), SerializeField] float interpolator = .5f;
+    [SerializeField] ValueDisplayer valueDisplayer;
 
     private void Awake()
     {
+        valueDisplayer.SetValue(tails.Count + 1);
         characterController = GetComponent<CharacterController>();
     }
 
@@ -30,11 +31,10 @@ public class Snake : MonoBehaviour
         movingVector.z = moveSpeed * Time.deltaTime;
         movingVector.x = FindObjectOfType<InputProvider>().XSpeed * Time.deltaTime;
         characterController.Move(movingVector);
-
     }
 
     private void MoveTail()
-    { 
+    {
         float sqrDistance = Mathf.Sqrt(bonesDistance);
         Vector3 previousPosition = transform.position;
 
@@ -49,5 +49,19 @@ public class Snake : MonoBehaviour
             else
                 break;
         }
+    }
+
+    public void AddBone()
+    {
+        GameObject bone = Instantiate(bonePrefab, tails[tails.Count - 1].transform.position, Quaternion.identity);
+        tails.Add(bone.transform);
+        valueDisplayer.SetValue(tails.Count + 1);
+    }
+
+    public void RemoveBone()
+    {
+        Destroy(tails[0].gameObject);
+        tails.RemoveAt(0);
+        valueDisplayer.SetValue(tails.Count + 1);
     }
 }
