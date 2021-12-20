@@ -5,63 +5,60 @@ using UnityEngine;
 
 public class Snake : MonoBehaviour
 {
-    [SerializeField] private List<Transform> tails;
-    [SerializeField] private float bonesDistance;
+    [SerializeField] private List<Transform> bones;
     [SerializeField] private GameObject bonePrefab;
-    [Range(0, 20), SerializeField] private float moveSpeed;
-    CharacterController characterController;
-    Vector3 movingVector;
 
     [SerializeField] ValueDisplayer valueDisplayer;
 
+    Vector3 startPosition;
+    int startBonesCount;
     private void Awake()
     {
-        valueDisplayer.SetValue(tails.Count);
-        characterController = GetComponent<CharacterController>();
+        valueDisplayer.SetValue(bones.Count);
+        startPosition = transform.position;
+        startBonesCount = bones.Count;
     }
 
-    private void Update()
+    public void AddBone(Transform bone)
     {
-        MoveHead(moveSpeed);
-        MoveTail();
-    }
-
-    private void MoveHead(float speed)
-    {
-        movingVector.z = moveSpeed * Time.deltaTime;
-        movingVector.x = FindObjectOfType<InputProvider>().XSpeed * Time.deltaTime;
-        characterController.Move(movingVector);
-    }
-
-    private void MoveTail()
-    {
-        float sqrDistance = Mathf.Sqrt(bonesDistance);
-        Vector3 previousPosition = transform.position;
-
-        foreach (var bone in tails)
-        {
-            if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
-            {
-                Vector3 currentBonePosition = bone.position;
-                bone.GetComponent<CharacterController>().Move((previousPosition - currentBonePosition) * moveSpeed * Time.deltaTime);
-                previousPosition = currentBonePosition;
-            }
-            else
-                break;
-        }
-    }
-
-    public void AddBone()
-    {
-        GameObject bone = Instantiate(bonePrefab, tails[tails.Count - 1].transform.position, Quaternion.identity);
-        tails.Add(bone.transform);
-        valueDisplayer.SetValue(tails.Count);
+        GameObject boneToAdd = Instantiate(bonePrefab, bone.position, Quaternion.identity);
+        bones.Add(boneToAdd.transform);
+        valueDisplayer.SetValue(bones.Count);
     }
 
     public void RemoveBone()
     {
-        Destroy(tails[0].gameObject);
-        tails.RemoveAt(0);
-        valueDisplayer.SetValue(tails.Count);
+        if (bones.Count <= 0)
+            Die();
+        else 
+        {
+            Destroy(bones[0].gameObject);
+            bones.RemoveAt(0);
+            valueDisplayer.SetValue(bones.Count);
+        }
+    }
+
+    public List<Transform> GetBones()
+    { 
+        return bones;
+    }
+
+    void Die()
+    {
+        if (bones.Count <= 0)
+        {
+            FindObjectOfType<GameOverScreen>(true).gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void RebuildSnake()
+    {
+        transform.position = startPosition;
+        gameObject.SetActive(true);
+        for (int i = 0; i < startBonesCount; i++)
+        {
+            AddBone(transform);        
+        }
     }
 }

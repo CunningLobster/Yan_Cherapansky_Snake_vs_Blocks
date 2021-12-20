@@ -63,7 +63,7 @@ public class Block : MonoBehaviour
 
     IEnumerator DestroyBlock(Snake snake)
     {
-        while (true)
+        while (snake.isActiveAndEnabled)
         {
             value--;
             color = new Color(1 - value / 25f, material.color.g, value / 25f);

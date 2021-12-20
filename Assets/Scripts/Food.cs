@@ -17,7 +17,7 @@ public class Food : MonoBehaviour
         print("Triggered");
         for (int i = 0; i < valueDisplayer.GetValue(); i++)
         {
-            FindObjectOfType<Snake>().AddBone();
+            FindObjectOfType<Snake>().AddBone(snake.GetBones()[snake.GetBones().Count - 1 ]);
         }
         Destroy(gameObject);
     }
