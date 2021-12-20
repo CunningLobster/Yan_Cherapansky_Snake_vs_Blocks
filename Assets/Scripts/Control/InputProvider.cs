@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Controls
+namespace Control
 {
     public class InputProvider : MonoBehaviour
     {
