@@ -8,8 +8,9 @@ namespace ScoreSystem
     public class ScoreIndicator : MonoBehaviour
     {
         public int score;
-        private int bestScore;
         TMP_Text scoreText;
+
+        public const string bestScoreKey = "BestScore";
 
         private void Awake()
         {
@@ -23,11 +24,13 @@ namespace ScoreSystem
 
         public void AddScore()
         {
-            print("add score");
             score++;
-            if (score > bestScore)
-            { 
-                bestScore = score;
+
+            int currentHighScore = PlayerPrefs.GetInt(bestScoreKey, 0);
+
+            if (score > currentHighScore)
+            {
+                PlayerPrefs.SetInt(bestScoreKey, score);
             }
         }
 
@@ -39,11 +42,6 @@ namespace ScoreSystem
         public int GetScore()
         { 
             return score;
-        }
-
-        public int GetBestScore()
-        { 
-            return bestScore;
         }
     }
 }

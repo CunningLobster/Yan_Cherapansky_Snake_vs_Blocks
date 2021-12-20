@@ -15,11 +15,19 @@ namespace UI
         private void Awake()
         {
             scoreField.text = $"Score : {FindObjectOfType<ScoreIndicator>().GetScore().ToString()}";
-            bestScoreField.text = $"Best : {FindObjectOfType<ScoreIndicator>().GetBestScore().ToString()}";
+            bestScoreField.text = $"Best : {PlayerPrefs.GetInt(ScoreIndicator.bestScoreKey, 0)}";
+        }
+
+        private void OnEnable()
+        {
+            FindObjectOfType<ScoreIndicator>(true).ResetScore();
+            FindObjectOfType<ScoreIndicator>(true).gameObject.SetActive(false);
         }
 
         public void Restart()
         {
+            FindObjectOfType<ScoreIndicator>(true).gameObject.SetActive(true);
+
             SnakeBuilder snake = FindObjectOfType<SnakeBuilder>(true);
             snake.RebuildSnake();
 

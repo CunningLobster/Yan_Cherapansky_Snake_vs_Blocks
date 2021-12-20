@@ -11,11 +11,12 @@ namespace UI
 
         private void Awake()
         {
-            bestScoreField.text = $"Best - {FindObjectOfType<ScoreIndicator>().GetBestScore().ToString()}";
+            bestScoreField.text = $"Best - {PlayerPrefs.GetInt(ScoreIndicator.bestScoreKey, 0)}";
         }
 
         public void Play()
         {
+            FindObjectOfType<ScoreIndicator>(true).gameObject.SetActive(true);
             FindObjectOfType<SnakeBuilder>().GetComponent<SnakeMover>().enabled = true;
             gameObject.SetActive(false);
         }

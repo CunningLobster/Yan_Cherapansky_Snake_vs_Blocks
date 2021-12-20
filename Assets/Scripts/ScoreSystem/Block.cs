@@ -24,7 +24,7 @@ namespace ScoreSystem
             material = GetComponent<Renderer>().material;
             color = new Color(1 - value / 25f, material.color.g, value / 25f);
             GetComponent<Renderer>().material.color = color;
-            scoreIndicator = FindObjectOfType<ScoreIndicator>();
+            scoreIndicator = FindObjectOfType<ScoreIndicator>(true);
         }
 
         private void Update()

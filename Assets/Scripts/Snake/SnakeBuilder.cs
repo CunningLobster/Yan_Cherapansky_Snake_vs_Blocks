@@ -52,7 +52,6 @@ namespace Snake
             if (bones.Count <= 0)
             {
                 FindObjectOfType<GameOverScreen>(true).gameObject.SetActive(true);
-                FindObjectOfType<ScoreIndicator>().ResetScore();
                 gameObject.SetActive(false);
             }
         }
