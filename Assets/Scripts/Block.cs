@@ -6,7 +6,9 @@ using UnityEngine.InputSystem;
 public class Block : MonoBehaviour
 {
     [SerializeField] ValueDisplayer valueDisplayer;
-    [SerializeField] int value;
+    [SerializeField] int minValue;
+    [SerializeField] int maxValue;
+    int value;
 
     [Range(0, .5f), SerializeField] float destroyingFrequency = .1f;
     Color color;
@@ -14,6 +16,7 @@ public class Block : MonoBehaviour
 
     private void Awake()
     {
+        value = Random.Range(minValue, maxValue);
         material = GetComponent<Renderer>().material;
         color = new Color(1 - value /25f , material.color.g, value/ 25f);
         GetComponent<Renderer>().material.color = color;
@@ -35,11 +38,11 @@ public class Block : MonoBehaviour
             color = new Color(1 - value / 25f, material.color.g, value/ 25f);
             GetComponent<Renderer>().material.color = color;
         }
-        print("B " + material.color.b);
-        print("R " + material.color.r);
+        //print("B " + material.color.b);
+        //print("R " + material.color.r);
 
         valueDisplayer.SetValue(value);
-        if (value == 0)
+        if (value <= 0)
         { 
             Destroy(gameObject);
         }
@@ -48,7 +51,14 @@ public class Block : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.TryGetComponent<Snake>(out Snake snake)) return;
-        StartCoroutine(DestroyBlock(snake));
+
+        Vector3 blockToSnake = snake.transform.position  - transform.position;
+        Debug.Log("blockToSnake" + blockToSnake);
+
+        if (Vector3.Dot(blockToSnake.normalized, Vector3.back) > .7f)
+        {
+            StartCoroutine(DestroyBlock(snake));
+        }
     }
 
     IEnumerator DestroyBlock(Snake snake)
