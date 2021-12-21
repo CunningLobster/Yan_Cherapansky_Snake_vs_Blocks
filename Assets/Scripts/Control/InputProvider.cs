@@ -12,7 +12,7 @@ namespace Control
 
         public float XSpeed { get; private set; }
 
-        public bool isPushed;
+        bool isPushed;
         public void OnMove(InputAction.CallbackContext context)
         {
             dragDirection = context.ReadValue<Vector2>();

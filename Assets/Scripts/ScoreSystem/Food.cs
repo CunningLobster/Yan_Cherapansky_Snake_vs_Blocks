@@ -14,15 +14,25 @@ namespace ScoreSystem
             valueDisplayer.SetValue(Random.Range(1, 10));
         }
 
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent<SnakeBuilder>(out SnakeBuilder snake)) return;
-            print("Triggered");
+
+            AudioSource audioSource = GetComponent<AudioSource>();
+
             for (int i = 0; i < valueDisplayer.GetValue(); i++)
             {
-                FindObjectOfType<SnakeBuilder>().AddBone(snake.GetBones()[snake.GetBones().Count - 1]);
+                if (snake.GetBones().Count == 0)
+                    snake.AddBone(snake.transform);
+                else
+                    snake.AddBone(snake.GetBones()[snake.GetBones().Count - 1]);
             }
-            Destroy(gameObject);
+
+            audioSource.Play();
+            GetComponent<MeshRenderer>().enabled = false;
+            Destroy(gameObject, audioSource.clip.length);
+
+            GetComponent<Collider>().enabled = false;
         }
     }
 }

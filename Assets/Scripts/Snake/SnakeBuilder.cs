@@ -16,6 +16,7 @@ namespace Snake
 
         Vector3 startPosition;
         int startBonesCount;
+
         private void Awake()
         {
             valueDisplayer.SetValue(bones.Count);

@@ -13,6 +13,8 @@ namespace ScoreSystem
         int value;
 
         [Range(0, .5f), SerializeField] float destroyingFrequency = .1f;
+        AudioSource audioSource;
+
         Color color;
         Material material;
 
@@ -25,6 +27,7 @@ namespace ScoreSystem
             color = new Color(1 - value / 25f, material.color.g, value / 25f);
             GetComponent<Renderer>().material.color = color;
             scoreIndicator = FindObjectOfType<ScoreIndicator>(true);
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -46,11 +49,13 @@ namespace ScoreSystem
             //print("R " + material.color.r);
 
             valueDisplayer.SetValue(value);
+
             if (value <= 0)
             {
-                Destroy(gameObject);
+                DestroyBlock();
             }
         }
+
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -61,7 +66,7 @@ namespace ScoreSystem
 
             if (Vector3.Dot(blockToSnake.normalized, Vector3.back) > .7f)
             {
-                StartCoroutine(DestroyBlock(snake));
+                StartCoroutine(DecreaseBlockValue(snake));
             }
         }
 
@@ -70,12 +75,21 @@ namespace ScoreSystem
             StopAllCoroutines();
         }
 
-        IEnumerator DestroyBlock(SnakeBuilder snake)
+        private void DestroyBlock()
         {
-            while (snake.isActiveAndEnabled)
+            GetComponent<MeshRenderer>().enabled = false;
+            valueDisplayer.GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+            Destroy(gameObject, audioSource.clip.length);
+        }
+
+        IEnumerator DecreaseBlockValue(SnakeBuilder snake)
+        {
+            while (snake.isActiveAndEnabled && value > 0)
             {
                 value--;
                 scoreIndicator.AddScore();
+                audioSource.Play();
 
                 color = new Color(1 - value / 25f, material.color.g, value / 25f);
                 GetComponent<Renderer>().material.color = color;
