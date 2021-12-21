@@ -12,14 +12,12 @@ namespace UI
         [SerializeField] TMP_Text scoreField;
         [SerializeField] TMP_Text bestScoreField;
 
-        private void Awake()
-        {
-            scoreField.text = $"Score : {FindObjectOfType<ScoreIndicator>().GetScore().ToString()}";
-            bestScoreField.text = $"Best : {PlayerPrefs.GetInt(ScoreIndicator.bestScoreKey, 0)}";
-        }
-
         private void OnEnable()
         {
+            scoreField.text = $"Score : {FindObjectOfType<ScoreIndicator>(true).GetScore().ToString()}";
+            bestScoreField.text = $"Best : {PlayerPrefs.GetInt(ScoreIndicator.bestScoreKey, 0)}";
+
+
             FindObjectOfType<ScoreIndicator>(true).ResetScore();
             FindObjectOfType<ScoreIndicator>(true).gameObject.SetActive(false);
         }

@@ -20,5 +20,10 @@ namespace UI
             FindObjectOfType<SnakeBuilder>().GetComponent<SnakeMover>().enabled = true;
             gameObject.SetActive(false);
         }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
     }
 }
