@@ -15,6 +15,8 @@ namespace ScoreSystem
         [Range(0, .5f), SerializeField] float destroyingFrequency = .1f;
         AudioSource audioSource;
 
+        [SerializeField] ParticleSystem blockCrushEffect;
+
         Color color;
         Material material;
 
@@ -77,6 +79,7 @@ namespace ScoreSystem
 
         private void DestroyBlock()
         {
+            blockCrushEffect.gameObject.SetActive(true);
             GetComponent<MeshRenderer>().enabled = false;
             valueDisplayer.GetComponent<MeshRenderer>().enabled = false;
             GetComponent<Collider>().enabled = false;

@@ -11,8 +11,11 @@ namespace Snake
     {
         [SerializeField] private List<Transform> bones;
         [SerializeField] private GameObject bonePrefab;
+        [SerializeField] private ParticleSystem sparklesEffect;
 
         [SerializeField] ValueDisplayer valueDisplayer;
+
+        [SerializeField] GameObject zeroBone;
 
         Vector3 startPosition;
         int startBonesCount;
@@ -26,13 +29,22 @@ namespace Snake
 
         public void AddBone(Transform bone)
         {
+            if (bones.Count == 0)
+                zeroBone.SetActive(false);
+
             GameObject boneToAdd = Instantiate(bonePrefab, bone.position, Quaternion.identity);
             bones.Add(boneToAdd.transform);
             valueDisplayer.SetValue(bones.Count);
+
         }
 
         public void RemoveBone()
         {
+            sparklesEffect.Play();
+
+            if (bones.Count == 1)
+                zeroBone.SetActive(true);
+
             if (bones.Count <= 0)
                 Die();
             else
@@ -50,11 +62,8 @@ namespace Snake
 
         void Die()
         {
-            if (bones.Count <= 0)
-            {
-                FindObjectOfType<GameOverScreen>(true).gameObject.SetActive(true);
-                gameObject.SetActive(false);
-            }
+            FindObjectOfType<GameOverScreen>(true).gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
 
         public void RebuildSnake()
