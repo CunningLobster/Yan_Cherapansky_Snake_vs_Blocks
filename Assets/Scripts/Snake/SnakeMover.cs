@@ -34,7 +34,7 @@ namespace Snake
 
         private void MoveTail()
         {
-            float sqrDistance = Mathf.Sqrt(bonesDistance);
+            float sqrDistance = Mathf.Pow(bonesDistance, 2);
             Vector3 previousPosition = transform.position;
 
             foreach (var bone in bones)
