@@ -26,7 +26,7 @@ namespace ScoreSystem
         {
             value = Random.Range(minValue, maxValue);
             material = GetComponent<Renderer>().material;
-            color = new Color(1 - value / 25f, material.color.g, value / 25f);
+            color = new Color(1 - value / 35f, material.color.g, value / 35f);
             GetComponent<Renderer>().material.color = color;
             scoreIndicator = FindObjectOfType<ScoreIndicator>(true);
             audioSource = GetComponent<AudioSource>();
@@ -34,22 +34,6 @@ namespace ScoreSystem
 
         private void Update()
         {
-            if (Keyboard.current.cKey.wasPressedThisFrame)
-            {
-                value--;
-                color = new Color(1 - value / 25f, material.color.g, value / 25f);
-                GetComponent<Renderer>().material.color = color;
-            }
-
-            if (Keyboard.current.vKey.wasPressedThisFrame)
-            {
-                value++;
-                color = new Color(1 - value / 25f, material.color.g, value / 25f);
-                GetComponent<Renderer>().material.color = color;
-            }
-            //print("B " + material.color.b);
-            //print("R " + material.color.r);
-
             valueDisplayer.SetValue(value);
 
             if (value <= 0)
@@ -94,7 +78,7 @@ namespace ScoreSystem
                 scoreIndicator.AddScore();
                 audioSource.Play();
 
-                color = new Color(1 - value / 25f, material.color.g, value / 25f);
+                color = new Color(1 - value / 35f, material.color.g, value / 35f);
                 GetComponent<Renderer>().material.color = color;
 
                 snake.RemoveBone();
