@@ -8,11 +8,15 @@ namespace Control
     public class InputProvider : MonoBehaviour
     {
         Vector2 dragDirection;
-        [SerializeField] float dragSpeed = 10f;
+        float senseMult = 20f;
+
+        public const string sensKey = "sens";
 
         public float XSpeed { get; private set; }
 
         bool isPushed;
+        public bool isEsc;
+
         public void OnMove(InputAction.CallbackContext context)
         {
             dragDirection = context.ReadValue<Vector2>();
@@ -26,9 +30,10 @@ namespace Control
         private void Update()
         {
             if (isPushed)
-                XSpeed = dragDirection.x * dragSpeed;
+                XSpeed = dragDirection.x * PlayerPrefs.GetFloat(sensKey, .5f) * senseMult;
             else
                 XSpeed = 0;
         }
+
     }
 }

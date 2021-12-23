@@ -18,6 +18,7 @@ namespace UI
         {
             FindObjectOfType<ScoreIndicator>(true).gameObject.SetActive(true);
             FindObjectOfType<SnakeBuilder>().GetComponent<SnakeMover>().enabled = true;
+            FindObjectOfType<PauseActivator>(true).gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
 
