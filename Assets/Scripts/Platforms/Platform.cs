@@ -6,13 +6,22 @@ namespace Platforms
 {
     public class Platform : MonoBehaviour
     {
-        public Transform origin;
-        public Transform end;
-        public Collider spawnPortal;
+        [SerializeField] Transform origin;
+        [SerializeField] Transform end;
+        [SerializeField] Collider spawnPortal;
 
         private void Awake()
         {
-            GameObject.FindObjectOfType<PlatformSpawner>().platforms.Add(this);
+            GameObject.FindObjectOfType<PlatformSpawner>().GetPlatforms().Add(this);
+        }
+
+        public Transform GetOrigin()
+        { 
+            return origin;
+        }
+        public Transform GetEnd()
+        { 
+            return end;
         }
     }
 }

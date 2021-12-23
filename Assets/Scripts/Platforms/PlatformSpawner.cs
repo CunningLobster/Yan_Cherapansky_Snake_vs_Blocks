@@ -6,7 +6,7 @@ namespace Platforms
 {
     public class PlatformSpawner : MonoBehaviour
     {
-        public List<Platform> platforms = new List<Platform>();
+        List<Platform> platforms = new List<Platform>();
         [SerializeField] Platform[] platformPrefabs;
         [SerializeField] Transform Level;
 
@@ -28,7 +28,7 @@ namespace Platforms
         {
             Platform lastSpawnedPlatform = platforms[platforms.Count - 1];
             Platform newPlatform = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
-            Vector3 newPlatformPos = lastSpawnedPlatform.end.position + newPlatform.transform.position - newPlatform.origin.position;
+            Vector3 newPlatformPos = lastSpawnedPlatform.GetEnd().position + newPlatform.transform.position - newPlatform.GetOrigin().position;
             newPlatform = Instantiate(newPlatform, newPlatformPos, Quaternion.identity);
             newPlatform.transform.SetParent(Level);
         }
@@ -46,6 +46,11 @@ namespace Platforms
             {
                 SpawnPlatform();
             }
+        }
+
+        public List<Platform> GetPlatforms()
+        { 
+            return platforms;
         }
     }
 }

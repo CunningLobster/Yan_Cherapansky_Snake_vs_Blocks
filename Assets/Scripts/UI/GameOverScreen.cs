@@ -17,7 +17,6 @@ namespace UI
             scoreField.text = $"Score : {FindObjectOfType<ScoreIndicator>(true).GetScore().ToString()}";
             bestScoreField.text = $"Best : {PlayerPrefs.GetInt(ScoreIndicator.bestScoreKey, 0)}";
 
-
             FindObjectOfType<ScoreIndicator>(true).ResetScore();
             FindObjectOfType<ScoreIndicator>(true).gameObject.SetActive(false);
         }

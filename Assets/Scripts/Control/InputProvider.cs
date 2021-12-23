@@ -17,6 +17,11 @@ namespace Control
         bool isPushed;
         public bool isEsc;
 
+        private void Awake()
+        {
+            PlayerPrefs.SetFloat(sensKey, PlayerPrefs.GetFloat(sensKey, .5f));
+        }
+
         public void OnMove(InputAction.CallbackContext context)
         {
             dragDirection = context.ReadValue<Vector2>();
@@ -30,7 +35,7 @@ namespace Control
         private void Update()
         {
             if (isPushed)
-                XSpeed = dragDirection.x * PlayerPrefs.GetFloat(sensKey, .5f) * senseMult;
+                XSpeed = dragDirection.x * PlayerPrefs.GetFloat(sensKey, 0.5f) * senseMult;
             else
                 XSpeed = 0;
         }

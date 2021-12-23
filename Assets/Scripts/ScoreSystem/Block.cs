@@ -13,9 +13,9 @@ namespace ScoreSystem
         int value;
 
         [Range(0, .5f), SerializeField] float destroyingFrequency = .1f;
-        AudioSource audioSource;
-
         [SerializeField] ParticleSystem blockCrushEffect;
+
+        AudioSource audioSource;
 
         Color color;
         Material material;
@@ -25,9 +25,11 @@ namespace ScoreSystem
         private void Awake()
         {
             value = Random.Range(minValue, maxValue);
+
             material = GetComponent<Renderer>().material;
             color = new Color(1 - value / 35f, material.color.g, value / 35f);
             GetComponent<Renderer>().material.color = color;
+
             scoreIndicator = FindObjectOfType<ScoreIndicator>(true);
             audioSource = GetComponent<AudioSource>();
         }
@@ -48,7 +50,6 @@ namespace ScoreSystem
             if (!collision.gameObject.TryGetComponent<SnakeBuilder>(out SnakeBuilder snake)) return;
 
             Vector3 blockToSnake = snake.transform.position - transform.position;
-            Debug.Log("blockToSnake" + blockToSnake);
 
             if (Vector3.Dot(blockToSnake.normalized, Vector3.back) > .7f)
             {

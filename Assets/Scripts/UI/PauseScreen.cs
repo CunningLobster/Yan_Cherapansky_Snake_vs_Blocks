@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;//To Fix
+using UnityEngine.SceneManagement;
 
 
 namespace UI
@@ -18,7 +18,7 @@ namespace UI
 
         public void Continue()
         {
-            Time.timeScale = 1.0f;
+            gameObject.SetActive(false);
         }
 
         public void LoadMainMenu()

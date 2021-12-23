@@ -19,10 +19,10 @@ namespace Platforms
             {
                 platformSpawner.SpawnPlatform();
 
-                if (platformSpawner.platforms.Count > 5)
+                if (platformSpawner.GetPlatforms().Count > 5)
                 {
-                    Destroy(platformSpawner.platforms[0].gameObject);
-                    platformSpawner.platforms.RemoveAt(0);
+                    Destroy(platformSpawner.GetPlatforms()[0].gameObject);
+                    platformSpawner.GetPlatforms().RemoveAt(0);
                 }
             }
         }

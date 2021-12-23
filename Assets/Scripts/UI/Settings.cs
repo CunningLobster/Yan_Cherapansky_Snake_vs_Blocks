@@ -14,8 +14,12 @@ namespace UI
 
         private void Awake()
         {
-            sensSlider.value = PlayerPrefs.GetFloat(InputProvider.sensKey);
             inputProvider = FindObjectOfType<InputProvider>();
+        }
+
+        private void OnEnable()
+        {
+            sensSlider.value = PlayerPrefs.GetFloat(InputProvider.sensKey, .5f);
         }
 
         private void Update()
